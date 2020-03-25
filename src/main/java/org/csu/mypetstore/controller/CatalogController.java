@@ -1,6 +1,7 @@
 package org.csu.mypetstore.controller;
 
 import org.csu.mypetstore.domain.Category;
+import org.csu.mypetstore.domain.Item;
 import org.csu.mypetstore.domain.Product;
 import org.csu.mypetstore.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,9 @@ public class CatalogController {
     private CatalogService catalogService;
 
 
+
     /**
-     * 主界面跳转
+     * 跳转到主界面
      * @return
      */
     @GetMapping("/main")
@@ -29,6 +31,12 @@ public class CatalogController {
     }
 
 
+    /**
+     * 主界面跳转到特定Category中显示product列表的界面
+     * @param categoryId
+     * @param model
+     * @return
+     */
     @GetMapping("/viewCategory")
     public String viewCategory(String categoryId, Model model){
         if (categoryId != null){
@@ -41,4 +49,29 @@ public class CatalogController {
         return "catalog/main";
     }
 
+    /**
+     * Category列表选择特定的product跳转到特定的item列表界面
+     * @param productId
+     * @param model
+     * @return
+     */
+    @GetMapping("/viewProduct")
+    public String viewProduct(String productId,Model model){
+        if (productId != null){
+            Product product = catalogService.getProduct(productId);
+            List<Item> itemList = catalogService.getItemListByProduct(productId);
+            model.addAttribute("product",product);
+            model.addAttribute("itemList",itemList);
+            return "catalog/product";
+        }
+        return "catalog/main";
+    }
+
+
+    @GetMapping("/viewItem")
+    public String viewItem(String itemId,Model model){
+        Item item = catalogService.getItem(itemId);
+        model.addAttribute("item",item);
+        return "catalog/item";
+    }
 }

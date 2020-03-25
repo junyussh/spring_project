@@ -1,6 +1,7 @@
 package org.csu.mypetstore;
 
 import org.csu.mypetstore.domain.Category;
+import org.csu.mypetstore.domain.Item;
 import org.csu.mypetstore.domain.Product;
 import org.csu.mypetstore.service.CatalogService;
 import org.junit.jupiter.api.Test;
@@ -32,5 +33,13 @@ class MypetstoreApplicationTests {
     void testProduct(){
         List<Product> productList = catalogService.getProductListByCategory("BIRDS");
         System.out.println(productList.size());
+    }
+
+    @Test
+    void testItem(){
+        List<Item> itemList = catalogService.getItemListByProduct("FI-FW-01");
+        System.out.println("Itemlist size = "+itemList.size());
+        Product product = catalogService.getProduct("FI-FW-01");
+        System.out.println("product info "+product.getName());
     }
 }

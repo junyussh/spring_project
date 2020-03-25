@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:fmt="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/jpetstore.css" type="text/css">
+</head>
+<body>
+<div th:replace="/common/top"/>
+
+
+<div id="Content">
+
+    <div id="BackLink">
+        <a th:href="@{/catalog/viewProduct(productId=${item.product.productId})}"
+           th:text="'Return to '+${item.product.name}">Return to Product</a>
+    </div>
+
+    <div id="Catalog">
+
+        <table>
+            <tr>
+                <td th:utext="${item.product.description}">description</td>
+            </tr>
+
+            <tr>
+                <td>
+                    <b th:text="${item.itemId}">itemId</b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b th:utext="${item.attribute1}+${item.product.name}">
+                        <font size="4">
+                            name
+                        </font>
+                    </b>
+                </td>
+            </tr>
+            <tr>
+                <td th:utext="${item.product.name}">name</td>
+            </tr>
+            <tr>
+                <td th:if="${item.quantity} <=0">Back Order</td>
+                <td th:if="${item.quantity} >0" th:text="${item.quantity}+' in stock'">Back Order</td>
+            </tr>
+            <tr>
+                <td>  <fmt:formatNumber th:text="${item.listPrice}" pattern="$#,##0.00"/>
+                    price
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <a th:href="@{'/addItemToCart'(workingItemId=${item.itemId})}">Add to Cart</a>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+
+</div>
+
+
+<div th:replace="/common/bottom"/>
+</body>
+</html>

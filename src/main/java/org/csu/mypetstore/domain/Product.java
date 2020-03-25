@@ -1,5 +1,6 @@
 package org.csu.mypetstore.domain;
 
+
 public class Product {
     private String productId;
     private String categoryId;

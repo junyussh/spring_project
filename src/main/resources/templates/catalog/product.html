@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:fmt="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/jpetstore.css" type="text/css">
+</head>
+<body>
+<div th:replace="/common/top"/>
+<div id="Content">
+    <div id="Catalog">
+
+        <h2 th:text="${product.name}"></h2>
+
+        <table>
+            <tr>
+                <th>Item ID</th>
+                <th>Product ID</th>
+                <th>name</th>
+                <th>List Price</th>
+                <th></th>
+            </tr>
+            <tr th:each="item:${itemList}">
+                <td> <a th:href="@{'/catalog/viewItem'(itemId=${item.itemId})}"  th:text="${item.itemId}" ></a></td>
+                <td th:text="${item.product.productId}"></td>
+                <td th:text="${item.product.name}"></td>
+                <td th:text="${item.listPrice}"></td>
+                <td><a th:href="@{'/addItemToCart'(workingItemId=${item.itemId})}">Add to Cart</a></td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+
+
+<div th:replace="/common/bottom"/>
+</body>
+</html>
