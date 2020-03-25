@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/jpetstore.css" type="text/css">
+</head>
+<body>
+<div th:replace="/common/top"/>
+
+<div id="Content">
+    <div id="Catalog">
+
+        <h2 th:text="${category.name}">category name</h2>
+
+        <table>
+            <tr>
+                <th>Product ID</th>
+                <th>Name</th>
+            </tr>
+            <!-- 循环 -->
+            <tr th:each="product : ${productList}">
+                <td>
+                    <a th:href="@{'/catalog/product'(productId=${product.productId})}"  th:text="${product.productId}">FL-DLH-02</a>
+                </td>
+                <td th:text="${product.name}">Persian</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div th:replace="/common/bottom"/>
+</body>
+</html>
