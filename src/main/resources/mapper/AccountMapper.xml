@@ -55,4 +55,49 @@
         AND PROFILE.USERID = ACCOUNT.USERID
         AND PROFILE.FAVCATEGORY = BANNERDATA.FAVCATEGORY
     </select>
+
+    <select id="insertAccount" parameterType="Account">
+    INSERT INTO ACCOUNT
+        (EMAIL, FIRSTNAME, LASTNAME, STATUS, ADDR1, ADDR2, CITY, STATE, ZIP, COUNTRY, PHONE, USERID)
+    VALUES
+        (#{email}, #{firstName}, #{lastName}, #{status}, #{address1},  #{address2,jdbcType=VARCHAR}, #{city}, #{state}, #{zip}, #{country}, #{phone}, #{username})
+    </select>
+
+    <select id="insertProfile" parameterType="Account">
+        INSERT INTO PROFILE (LANGPREF, FAVCATEGORY, USERID)
+        VALUES (#{languagePreference}, #{favouriteCategoryId}, #{username})
+    </select>
+
+    <select id="insertSignon" parameterType="Account">
+        INSERT INTO SIGNON (PASSWORD,USERNAME)
+        VALUES (#{password}, #{username})
+    </select>
+
+    <select id="updateAccount" parameterType="Account">
+    UPDATE ACCOUNT SET
+        EMAIL = #{email},
+        FIRSTNAME = #{firstName},
+        LASTNAME = #{lastName},
+        STATUS = #{status},
+        ADDR1 = #{address1},
+        ADDR2 = #{address2,jdbcType=VARCHAR},
+        CITY = #{city},
+        STATE = #{state},
+        ZIP = #{zip},
+        COUNTRY = #{country},
+        PHONE = #{phone}
+    WHERE USERID = #{username}
+    </select>
+
+    <select id="updateProfile" parameterType="Account">
+    UPDATE PROFILE SET
+        LANGPREF = #{languagePreference},
+        FAVCATEGORY = #{favouriteCategoryId}
+    WHERE USERID = #{username}
+    </select>
+
+    <select id="updateSignon" parameterType="Account">
+        UPDATE SIGNON SET PASSWORD = #{password}
+        WHERE USERNAME = #{username}
+    </select>
 </mapper>

@@ -3,6 +3,7 @@ package org.csu.mypetstore;
 import org.csu.mypetstore.domain.Category;
 import org.csu.mypetstore.domain.Item;
 import org.csu.mypetstore.domain.Product;
+import org.csu.mypetstore.service.AccountService;
 import org.csu.mypetstore.service.CatalogService;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
@@ -17,6 +18,9 @@ class MypetstoreApplicationTests {
 
     @Autowired
     public CatalogService catalogService;
+
+    @Autowired
+    public AccountService accountService;
 
 
     @Test
@@ -41,5 +45,10 @@ class MypetstoreApplicationTests {
         System.out.println("Itemlist size = "+itemList.size());
         Product product = catalogService.getProduct("FI-FW-01");
         System.out.println("product info "+product.getName());
+    }
+
+    @Test
+    void testAccount(){
+        System.out.println("account name is "+accountService.getAccount("a","a").getUsername());
     }
 }

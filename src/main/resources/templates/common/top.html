@@ -24,13 +24,13 @@
                     <img align="middle" name="img_cart" src="/images/cart.gif" />
                 </a>
                 <img align="middle" src="/images/separator.gif" />
-                <a href="/toLogin" th:if="${session.account} == null">
+                <a href="/account/login" th:if="${session.account} == null">
                     Sign In
                 </a>
-                <a href="/toLogOut" th:if="${session.account} != null">
+                <a href="/account/logout" th:if="${session.account} != null">
                     Sign Out
                 </a>
-                <a href="/toUpdateAccount" th:if="${session.account} != null">
+                <a href="/account/view_info" th:if="${session.account} != null">
                     <img align="middle" src="/images/separator.gif" />
                     My Account
                 </a>

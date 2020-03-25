@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/jpetstore.css" type="text/css">
+</head>
+<body>
+<div th:replace="/common/top"/>
+
+<div id="Content">
+
+    <div id="Catalog">
+        <form action="/account/login_confirm" method="post">
+            <p>Please enter your username and password.</p>
+            <p>
+                Username:<input type="text" th:name="username" />
+                <br/>
+                Password:<input type="password" th:name="password"/>
+                <br/>
+            </p>
+            <input th:type="submit" value="Login"/>
+        </form>
+        Need a user name and password?<a href="/account/register" th:text="register"></a>
+    </div>
+</div>
+
+<div th:replace="/common/bottom"/>
+</body>
+</html>

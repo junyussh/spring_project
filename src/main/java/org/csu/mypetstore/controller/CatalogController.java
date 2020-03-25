@@ -19,8 +19,6 @@ public class CatalogController {
     @Autowired
     private CatalogService catalogService;
 
-
-
     /**
      * 跳转到主界面
      * @return
@@ -68,6 +66,12 @@ public class CatalogController {
     }
 
 
+    /**
+     * product列表选择特定的item跳转到特定的item展示信息列表
+     * @param itemId
+     * @param model
+     * @return
+     */
     @GetMapping("/viewItem")
     public String viewItem(String itemId,Model model){
         Item item = catalogService.getItem(itemId);
