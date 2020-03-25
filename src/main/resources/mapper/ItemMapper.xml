@@ -46,4 +46,10 @@
         and I.ITEMID = V.ITEMID
         and I.ITEMID = #{value}
     </select>
+
+    <select id="getInventoryQuantity" parameterType="String" resultType="int">
+    SELECT QTY AS value
+        FROM INVENTORY
+    WHERE ITEMID = #{itemId}
+    </select>
 </mapper>

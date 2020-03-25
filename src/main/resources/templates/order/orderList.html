@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/jpetstore.css" type="text/css">
+</head>
+<body>
+<div th:replace="/common/top"/>
+<div id="Content">
+    <h2>My Orders</h2>
+    <table>
+        <tr>
+            <th>Order ID</th>
+            <th>Date</th>
+            <th>Total Price</th>
+        </tr>
+        <!-- 循环 -->
+        <tr th:each="order:${orderlist}">
+            <td><a th:href="@{/order/vieworder(orderId=${order.orderId})}" th:text="${order.orderId}">1000</a></td>
+            <td th:text="${order.orderDate}">2014/03/23 12:00:00</td>
+            <td th:text="${order.totalPrice}">$18.50</td>
+        </tr>
+    </table>
+
+</div>
+
+<div th:replace="/common/bottom"/>
+</body>
+</html>

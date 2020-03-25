@@ -25,7 +25,7 @@
                 <td th:text="${item.product.productId}"></td>
                 <td th:text="${item.product.name}"></td>
                 <td th:text="${item.listPrice}"></td>
-                <td><a th:href="@{'/addItemToCart'(workingItemId=${item.itemId})}">Add to Cart</a></td>
+                <td><a th:href="@{'/cart/addItemToCart'(itemId=${item.itemId})}">Add to Cart</a></td>
             </tr>
 
         </table>

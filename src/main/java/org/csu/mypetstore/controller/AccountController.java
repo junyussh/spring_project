@@ -22,7 +22,6 @@ public class AccountController {
     private AccountService accountService;
 
 
-
     /**
      * 登陆：跳转到登陆界面
      *
@@ -48,6 +47,7 @@ public class AccountController {
             if (account != null) {
                 httpSession.setAttribute("account", account);
                 httpSession.setAttribute("loginError", null);
+                httpSession.setAttribute("username",username);
                 return "/catalog/main";
             } else {
                 httpSession.setAttribute("loginError", 1);
@@ -164,6 +164,8 @@ public class AccountController {
         categoryList.add("REPTILES");
         model.addAttribute("languageList",languageList);
         model.addAttribute("categoryList", categoryList);
+//        model.addAttribute("account",)
+
         return "account/update_info";
     }
 

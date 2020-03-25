@@ -5,6 +5,7 @@ import org.csu.mypetstore.domain.Item;
 import org.csu.mypetstore.domain.Product;
 import org.csu.mypetstore.service.AccountService;
 import org.csu.mypetstore.service.CatalogService;
+import org.csu.mypetstore.service.OrderService;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ class MypetstoreApplicationTests {
 
     @Autowired
     public AccountService accountService;
+
+    @Autowired
+    public OrderService orderService;
 
 
     @Test
@@ -50,5 +54,10 @@ class MypetstoreApplicationTests {
     @Test
     void testAccount(){
         System.out.println("account name is "+accountService.getAccount("a","a").getUsername());
+    }
+
+    @Test
+    void testOrderList(){
+        System.out.println("orderlist size is "+orderService.getOrderListByUsername("a").size());
     }
 }

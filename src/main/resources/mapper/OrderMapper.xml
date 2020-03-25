@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.csu.mypetstore.persistence.OrderMapper">
+    <select id="getOrderListByUsername" parameterType="String" resultType="Order">
+    SELECT
+        BILLADDR1 AS billAddress1,
+        BILLADDR2 AS billAddress2,
+        BILLCITY,
+        BILLCOUNTRY,
+        BILLSTATE,
+        BILLTOFIRSTNAME,
+        BILLTOLASTNAME,
+        BILLZIP,
+        SHIPADDR1 AS shipAddress1,
+        SHIPADDR2 AS shipAddress2,
+        SHIPCITY,
+        SHIPCOUNTRY,
+        SHIPSTATE,
+        SHIPTOFIRSTNAME,
+        SHIPTOLASTNAME,
+        SHIPZIP,
+        CARDTYPE,
+        COURIER,
+        CREDITCARD,
+        EXPRDATE AS expiryDate,
+        LOCALE,
+        ORDERDATE,
+        ORDERS.ORDERID,
+        TOTALPRICE,
+        USERID AS username,
+        STATUS
+    FROM ORDERS, ORDERSTATUS
+    WHERE ORDERS.USERID = #{value}
+        AND ORDERS.ORDERID = ORDERSTATUS.ORDERID
+        ORDER BY ORDERDATE
+    </select>
+</mapper>

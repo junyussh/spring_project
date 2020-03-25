@@ -110,7 +110,10 @@
                    type="submit">
 
         </form>
-        <a href="order/listorders?username=${sessionScope.username}">My Orders</a>
+
+<!--        th:href="@{'/catalog/viewProduct'(productId=${product.productId})}-->
+        <a th:href="@{'/order/viewOrderList'(username=${session.username})}">My Orders</a>
+
 
     </div>
 
