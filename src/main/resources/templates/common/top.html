@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/jpetstore.css" type="text/css">
+</head>
+<body>
+    <header th:fragment="header">
+        <div id="Logo">
+            <div id="LogoContent">
+                <a href="/catalog/main">
+                    <img src="/images/logo-topbar.gif" />
+                </a>
+            </div>
+        </div>
+
+        <div id="Menu">
+            <div id="MenuContent">
+                <a th:if="${session.account} != null" href="/viewCart">
+                    <img align="middle" name="img_cart" src="/images/cart.gif" />
+                </a>
+                <a th:if="${session.account} == null" href="/toLogin">
+                    <img align="middle" name="img_cart" src="/images/cart.gif" />
+                </a>
+                <img align="middle" src="/images/separator.gif" />
+                <a href="/toLogin" th:if="${session.account} == null">
+                    Sign In
+                </a>
+                <a href="/toLogOut" th:if="${session.account} != null">
+                    Sign Out
+                </a>
+                <a href="/toUpdateAccount" th:if="${session.account} != null">
+                    <img align="middle" src="/images/separator.gif" />
+                    My Account
+                </a>
+                <img align="middle" src="/images/separator.gif" />
+                <a href="/help.html">
+                    ?
+                </a>
+            </div>
+        </div>
+
+        <div id="Search">
+            <div id="SearchContent">
+                <form action="/searchProduct" method="post">
+                    <input type="text" name="keyword" size="14" />
+                    <input type="submit" name="searchProducts" value="Search" />
+                </form>
+            </div>
+        </div>
+
+        <div id="QuickLinks">
+            <a href="/catalog/category?categoryId=FISH">
+                <img src="/images/sm_fish.gif" />
+            </a>
+            <img src="/images/separator.gif" />
+            <a href="/catalog/category?categoryId=DOGS">
+                <img src="/images/sm_dogs.gif" />
+            </a>
+            <img src="/images/separator.gif" />
+            <a href="/catalog/category?categoryId=REPTILES">
+                <img src="/images/sm_reptiles.gif" />
+            </a>
+            <img src="/images/separator.gif" />
+            <a href="/catalog/category?categoryId=CATS">
+                <img src="/images/sm_cats.gif" />
+            </a>
+            <img src="/images/separator.gif" />
+            <a href="/catalog/category?categoryId=BIRDS">
+                <img src="/images/sm_birds.gif" />
+            </a>
+        </div>
+    </header>
+
+</body>
+</html>
