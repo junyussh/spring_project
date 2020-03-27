@@ -6,12 +6,13 @@
  - [x] Catalog 
  
  - [x] Account
-   * 注册新用户模块仍有bug
+   * 注册新用户模块仍有bug--已解决
  
  - [ ] Order
     - [x] Order
     - [x] Cart
-        * 购物车添加新的item仍有bug   
+        * 购物车添加新的item仍有bug--已解决
+        * 购物车提交订单处人有bug
     - [ ] Log
      
  
