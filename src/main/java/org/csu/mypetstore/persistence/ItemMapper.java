@@ -4,6 +4,7 @@ import org.csu.mypetstore.domain.Item;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface ItemMapper {
@@ -13,4 +14,7 @@ public interface ItemMapper {
     Item getItem(String itemId);
 
     int getInventoryQuantity(String itemId);
+
+    void updateInventoryQuantity(Map<String, Object> param);
+
 }

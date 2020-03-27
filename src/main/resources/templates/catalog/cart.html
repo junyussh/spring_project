@@ -9,7 +9,7 @@
 <div th:replace="/common/top"/>
 <script type="text/javascript" th:inline="javascript">
     function Del(){
-        var tb=document.getElementById("tableId");    //获取table对像
+        var tb=document.getElementById("tableId");
         var rows=tb.rows;
         var go = 0;
         for(var i=1;i<rows.length-1;i++){    //--循环所有的行
@@ -137,18 +137,18 @@
                 <td th:text="${cartItem.getQuantity()}"></td>
                 <td th:text="${cartItem.getItem().getListPrice()}"></td>
                 <td>
-                    <a  th:text="remove" th:href="@{'/remove_cartItem'(cartItemId=${cartItem.getItem().getItemId()})}"></a><!---->
+                    <a  th:text="remove" th:href="@{'/cart/removeCartItem'(cartItemId=${cartItem.getItem().getItemId()})}"></a><!---->
                 </td>
             </tr>
 
             <tr>
-                <td th:text="'total:$'+${session.cart.getSubTotal()}"></td>
+<!--                <td th:text="'total:$'+${session.cart.getSubTotal()}"></td>-->
                 <td>
-                    <a th:text="UpdateCart" th:href="@{'/update_cart'}" class="Button"></a>
+                    <a th:text="UpdateCart" th:href="@{'/cart/clearAll'}" class="Button"></a>
                 </td>
             </tr>
         </table>
-        <h3><a href="/cart/checkout" class="Button">Proceed to Checkout</a></h3>
+        <h3><a href="/cart/checkOut" class="Button">Proceed to Checkout</a></h3>
     </div>
 </div>
 

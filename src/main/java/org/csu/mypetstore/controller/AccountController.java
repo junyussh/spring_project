@@ -1,6 +1,7 @@
 package org.csu.mypetstore.controller;
 
 import org.csu.mypetstore.domain.Account;
+import org.csu.mypetstore.domain.Cart;
 import org.csu.mypetstore.persistence.AccountMapper;
 import org.csu.mypetstore.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class AccountController {
 
     /**
      * 登陆验证：
-     *
+     * 注意点：在验证成功之后要把购物车一块传进去
      * @param username
      * @param password
      * @param model
@@ -48,6 +49,8 @@ public class AccountController {
                 httpSession.setAttribute("account", account);
                 httpSession.setAttribute("loginError", null);
                 httpSession.setAttribute("username",username);
+                Cart cart = new Cart();
+                httpSession.setAttribute("cart", cart);
                 return "/catalog/main";
             } else {
                 httpSession.setAttribute("loginError", 1);
@@ -60,7 +63,7 @@ public class AccountController {
 
     /**
      * 退出跳转到主界面
-     *
+     * 把session中的购物车清空
      * @return
      */
     @GetMapping("/logout")
@@ -82,6 +85,7 @@ public class AccountController {
 
     /**
      * 注册完成:注册界面->跳转到主界面界面
+     * 注意注册注册完成之后要把account和cart都放在session中，注册之后就不再去登陆，默认已经登陆了。
      * @param account
      * @param httpSession
      * @return
@@ -93,10 +97,13 @@ public class AccountController {
 
         // TODO 更正新增用户的bug
 
-//        account.setBannerOption(true);
-//        account.setListOption(true);
-//        account.setFavouriteCategoryId("DOGS");
-//        accountService.insertAccount(account);
+        account.setBannerOption(true);
+        account.setListOption(true);
+        account.setFavouriteCategoryId("DOGS");
+        accountService.insertAccount(account);
+        httpSession.setAttribute("account",account);
+        Cart cart = new Cart();
+        httpSession.setAttribute("cart", cart);
         return "catalog/main";
     }
 

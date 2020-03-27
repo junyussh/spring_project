@@ -10,4 +10,9 @@ public interface OrderMapper {
 
     List<Order> getOrderListByUsername(String username);
 
+    void insertOrder(Order order);
+
+    Order getOrder(int orderId);
+
+    void insertOrderStatus(Order order);
 }

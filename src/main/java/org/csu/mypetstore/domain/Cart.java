@@ -1,11 +1,24 @@
 package org.csu.mypetstore.domain;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 public class Cart {
 
     private final Map<String, CartItem> itemMap = Collections.synchronizedMap(new HashMap<String, CartItem>());
     private final List<CartItem> itemList = new ArrayList<CartItem>();
+
+    /**
+     * 获取此时购物车的元素个数
+     * @return
+     */
+    public int getNumberOfItems(){return itemList.size();}
+
+    /**
+     * 点击跳转到购物车界面时返回的购物车物品列表
+     * @return
+     */
+    public List<CartItem> getCartItemList(){return itemList;}
 
     /**
      * 在添加item时判断购物车内是否已经存在
@@ -54,5 +67,30 @@ public class Cart {
             itemList.add(cartItem);
         }
         cartItem.incrementQuantity();
+    }
+
+    /**
+     * 返回购物车中所有物品的总价
+     * @return
+     */
+    public BigDecimal getSubTotal() {
+        BigDecimal subTotal = new BigDecimal("0");
+        Iterator<CartItem> items = getAllCartItems();
+        while (items.hasNext()) {
+            CartItem cartItem = (CartItem) items.next();
+            Item item = cartItem.getItem();
+            BigDecimal listPrice = item.getListPrice();
+            BigDecimal quantity = new BigDecimal(String.valueOf(cartItem.getQuantity()));
+            subTotal = subTotal.add(listPrice.multiply(quantity));
+        }
+        return subTotal;
+    }
+
+    /**
+     * 遍历购物车中所有物品的迭代器
+     * @return
+     */
+    public Iterator<CartItem> getAllCartItems() {
+        return itemList.iterator();
     }
 }

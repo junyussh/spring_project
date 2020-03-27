@@ -17,10 +17,11 @@
 
         <div id="Menu">
             <div id="MenuContent">
-                <a th:if="${session.account} != null" href="/viewCart">
+<!--                关于购物车跳转，判断session中的account是否为空,不为空访问cart，为空去登陆-->
+                <a th:if="${session.account} != null" href="/cart/viewCart">
                     <img align="middle" name="img_cart" src="/images/cart.gif" />
                 </a>
-                <a th:if="${session.account} == null" href="/toLogin">
+                <a th:if="${session.account} == null" href="/account/login">
                     <img align="middle" name="img_cart" src="/images/cart.gif" />
                 </a>
                 <img align="middle" src="/images/separator.gif" />

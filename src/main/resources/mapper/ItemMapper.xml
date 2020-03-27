@@ -52,4 +52,10 @@
         FROM INVENTORY
     WHERE ITEMID = #{itemId}
     </select>
+
+    <select id="updateInventoryQuantity" parameterType="map">
+    UPDATE INVENTORY SET
+      QTY = QTY - #{increment}
+    WHERE ITEMID = #{itemId}
+    </select>
 </mapper>
