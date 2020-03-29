@@ -11,6 +11,9 @@ public class LineItem {
     private Item item;
     private BigDecimal total;
 
+    /** 无参构造函数=>缺失影响mybatis查询数据库 */
+    public LineItem(){}
+
     public LineItem(int lineNumber, CartItem cartItem) {
         this.lineNumber = lineNumber;
         this.quantity = cartItem.getQuantity();

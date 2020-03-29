@@ -101,7 +101,8 @@ public class CartController {
     @GetMapping("/checkOut")
     public String checkOut(HttpServletRequest request, Model model){
         HttpSession httpSession = request.getSession();
-        Account account=(Account)httpSession.getAttribute("user");
+        Account account=(Account)httpSession.getAttribute("account");
+        httpSession.setAttribute("account",account);
         return "order/checkOutForm";
     }
 }

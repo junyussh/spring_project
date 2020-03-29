@@ -294,9 +294,12 @@ public class Order {
 
     public void addLineItem(CartItem cartItem) {
         LineItem lineItem = new LineItem(lineItems.size() + 1, cartItem);
-        lineItems.add(lineItem);
+        addLineItem(lineItem);
     }
 
 
+    public void addLineItem(LineItem lineItem) {
+        lineItems.add(lineItem);
+    }
 
 }

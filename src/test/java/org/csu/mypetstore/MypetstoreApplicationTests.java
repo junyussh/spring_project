@@ -3,6 +3,7 @@ package org.csu.mypetstore;
 import org.csu.mypetstore.domain.Category;
 import org.csu.mypetstore.domain.Item;
 import org.csu.mypetstore.domain.Product;
+import org.csu.mypetstore.persistence.LineItemMapper;
 import org.csu.mypetstore.service.AccountService;
 import org.csu.mypetstore.service.CatalogService;
 import org.csu.mypetstore.service.OrderService;
@@ -25,6 +26,9 @@ class MypetstoreApplicationTests {
 
     @Autowired
     public OrderService orderService;
+
+    @Autowired
+    public LineItemMapper lineItemMapper;
 
 
     @Test
@@ -59,5 +63,16 @@ class MypetstoreApplicationTests {
     @Test
     void testOrderList(){
         System.out.println("orderlist size is "+orderService.getOrderListByUsername("a").size());
+    }
+
+    @Test
+    void testGetOrder(){
+        System.out.println("order total item number = "+orderService.getOrder(1014).getLineItems().size());
+        System.out.println(orderService.getOrder(1015).getBillAddress1());
+    }
+
+    @Test
+    void testGetOrder_LineItemList(){
+        System.out.println("the order 1014 's lineitemlist's size is "+lineItemMapper.getLineItemsByOrderId(1014).size());
     }
 }
