@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/jpetstore.css" type="text/css">
+</head>
+<body>
+<div th:replace="/common/top"/>
+
+<div id="Content">
+    <ul class="messages">
+        <li>Thank you, your order has been submitted.</li>
+    </ul>
+    <div id="BackLink">
+        <a href="/catalog/main">Return to Main Menu</a>
+    </div>
+
+    <div id="Catalog">
+
+        <table>
+            <tbody>
+            <tr>
+                <th align="center" colspan="2" th:text="'Order #'+${order.orderId}+' '+${order.orderDate}">Order #1000 2014/03/23 10:46:43</th>
+            </tr>
+            <tr>
+                <th colspan="2">Payment Details</th>
+            </tr>
+            <tr>
+                <td>Card Type:</td>
+                <td th:text="${order.cardType}">MasterCard</td>
+            </tr>
+            <tr>
+                <td>Card Number:</td>
+                <td th:text="${order.creditCard}">999 9999 9999 9999 * Fake number!</td>
+            </tr>
+            <tr>
+                <td>Expiry Date (MM/YYYY):</td>
+                <td th:text="${order.expiryDate}">12/03</td>
+            </tr>
+            <tr>
+                <th colspan="2">Billing Address</th>
+            </tr>
+            <tr>
+                <td>First name:</td>
+                <td th:text="${order.billToFirstName}">ABC</td>
+            </tr>
+            <tr>
+                <td>Last name:</td>
+                <td th:text="${order.billToLastName}">XYX</td>
+            </tr>
+            <tr>
+                <td>Address 1:</td>
+                <td th:text="${order.billAddress1}">901 San Antonio Road</td>
+            </tr>
+            <tr>
+                <td>Address 2:</td>
+                <td th:text="${order.billAddress2}">MS UCUP02-206</td>
+            </tr>
+            <tr>
+                <td>City:</td>
+                <td th:text="${order.billCity}">Palo Alto</td>
+            </tr>
+            <tr>
+                <td>State:</td>
+                <td th:text="${order.billState}">CA</td>
+            </tr>
+            <tr>
+                <td>Zip:</td>
+                <td th:text="${order.billZip}">94303</td>
+            </tr>
+            <tr>
+                <td>Country:</td>
+                <td th:text="${order.billCountry}">USA</td>
+            </tr>
+            <tr>
+                <th colspan="2">Shipping Address</th>
+            </tr>
+            <tr>
+                <td>First name:</td>
+                <td th:text="${order.shipToFirstName}">ABC</td>
+            </tr>
+            <tr>
+                <td>Last name:</td>
+                <td th:text="${order.shipToLastName}">XYX</td>
+            </tr>
+            <tr>
+                <td>Address 1:</td>
+                <td th:text="${order.shipAddress1}">901 San Antonio Road</td>
+            </tr>
+            <tr>
+                <td>Address 2:</td>
+                <td th:text="${order.shipAddress2}">MS UCUP02-206</td>
+            </tr>
+            <tr>
+                <td>City:</td>
+                <td th:text="${order.shipCity}">Palo Alto</td>
+            </tr>
+            <tr>
+                <td>State:</td>
+                <td th:text="${order.shipState}">CA</td>
+            </tr>
+            <tr>
+                <td>Zip:</td>
+                <td th:text="${order.shipZip}">94303</td>
+            </tr>
+            <tr>
+                <td>Country:</td>
+                <td th:text="${order.shipCountry}">USA</td>
+            </tr>
+            <tr>
+                <td>Courier:</td>
+                <td th:text="${order.courier}">UPS</td>
+            </tr>
+            <tr>
+
+                <td colspan="2" th:text="'Status:'+${order.status}"> P</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>Item ID</th>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total Cost</th>
+                        </tr>
+
+                        <tr th:each="Item:${order.lineItems}">
+                            <td><a th:href="@{/catalog/item(productId=${Item.item.product.productId},itemId=${Item.item.itemId})}" th:text="${Item.item.itemId}">EST-4</a></td>
+                            <td th:text="${Item.item.attribute1}+' '+${Item.item.product.name}">Spotted Koi</td>
+
+                            <td th:text="${Item.quantity}">1</td>
+                            <td th:text="'$'+${Item.item.listPrice}">18.50</td>
+                            <td th:text="'$'+${Item.total}"></td>
+                        </tr>
+
+                        <tr>
+                            <th colspan="5" th:text="'$'+${order.totalPrice}">Total: $18.50</th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<div th:replace="/common/bottom"/>
+</body>
+</html>

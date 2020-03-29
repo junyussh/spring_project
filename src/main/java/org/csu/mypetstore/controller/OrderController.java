@@ -91,8 +91,29 @@ public class OrderController {
         httpSession.setAttribute("order",order);
 
         //插入订单=>更新数据库的库存值域
-        orderService.insertOrder(order);
+//        orderService.insertOrder(order);
         return "order/confirmCheckOutForm";
+
+    }
+
+    /**
+     * 显示本次订单的界面，跳转到viewOrder页面
+     * @param request
+     * @param orderId
+     * @param model
+     * @return
+     */
+    @GetMapping("/viewOrder")
+    public String viewOrder(HttpServletRequest request,int orderId,Model model){
+        HttpSession httpSession = request.getSession();
+        Cart cart = new Cart();
+        httpSession.setAttribute("cart",cart);
+
+        // TODO 由于在第一个订单界面有问题，导致现在查表无法查到
+
+//        Order order = orderService.getOrder(orderId);
+        model.addAttribute("order",new Order());
+        return "order/viewOrder";
 
     }
 

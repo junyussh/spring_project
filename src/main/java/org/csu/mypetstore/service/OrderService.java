@@ -1,5 +1,6 @@
 package org.csu.mypetstore.service;
 
+import org.csu.mypetstore.domain.Item;
 import org.csu.mypetstore.domain.LineItem;
 import org.csu.mypetstore.domain.Order;
 import org.csu.mypetstore.domain.Sequence;
@@ -54,6 +55,10 @@ public class OrderService {
         return sequence.getNextId();
     }
 
+    /**
+     * 提交订单，跳转到确认订单界面
+     * @param order
+     */
     @Transactional
     public void insertOrder(Order order) {
         order.setOrderId(getNextId("ordernum"));
@@ -74,6 +79,24 @@ public class OrderService {
             lineItem.setOrderId(order.getOrderId());
             lineItemMapper.insertLineItem(lineItem);
         }
+    }
+
+    /**
+     * 渲染订单完成界面返回的orderlist
+     * @param orderId
+     * @return
+     */
+    @Transactional
+    public Order getOrder(int orderId){
+
+        // TODO 由于订单第一个界面订单完成的提交仍有bug=>订单确认界面无法正常显示=>最后完成交易的订单查看界面就查不到该订单
+
+        Order order = orderMapper.getOrder(orderId);
+        order.setLineItems(lineItemMapper.getLineItemsByOrderId(orderId));
+
+        // TODO 考虑有限库存的话=>刷新库存量
+
+        return order;
     }
 
 }
