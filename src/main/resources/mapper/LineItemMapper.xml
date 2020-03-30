@@ -4,18 +4,18 @@
 
 <mapper namespace="org.csu.mypetstore.persistence.LineItemMapper">
     <select id="getLineItemsByOrderId" parameterType="int" resultType="LineItem">
-    SELECT
-        ORDERID,
-        LINENUM AS lineNumber,
-        ITEMID,
-        QUANTITY,
-        UNITPRICE
-    FROM LINEITEM
-    WHERE ORDERID = #{orderId}
+    select
+        orderid,
+        linenum as lineNumber,
+        itemid,
+        quantity,
+        unitprice
+    from lineitem
+    where orderid = #{orderId}
     </select>
 
     <select id="insertLineItem" parameterType="LineItem">
-    INSERT INTO LINEITEM (ORDERID, LINENUM, ITEMID, QUANTITY, UNITPRICE)
-    VALUES (#{orderId}, #{lineNumber}, #{itemId}, #{quantity}, #{unitPrice})
+    insert into lineitem (orderid, linenum, itemid, quantity, unitprice)
+    values (#{orderId}, #{lineNumber}, #{itemId}, #{quantity}, #{unitPrice})
     </select>
 </mapper>

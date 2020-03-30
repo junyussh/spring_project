@@ -4,22 +4,22 @@
 
 <mapper namespace="org.csu.mypetstore.persistence.ProductMapper">
     <select id="getProduct" parameterType="String" resultType="Product">
-    SELECT
-        PRODUCTID,
-        NAME,
-        DESCN as description,
-        CATEGORY as categoryId
-    FROM PRODUCT
-    WHERE PRODUCTID = #{productId}
+    select
+        productid,
+        name,
+        descn as description,
+        category as categoryId
+    from product
+    where productid = #{productId}
     </select>
 
     <select id="getProductListByCategory" parameterType="String" resultType="Product">
-    SELECT
-        PRODUCTID,
-        NAME,
-        DESCN as description,
-        CATEGORY as categoryId
-    FROM PRODUCT
-    WHERE CATEGORY = #{value}
+    select
+        productid,
+        name,
+        descn as description,
+        category as categoryId
+    from product
+    where category = #{value}
     </select>
 </mapper>

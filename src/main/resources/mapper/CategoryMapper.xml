@@ -4,11 +4,11 @@
 
 <mapper namespace="org.csu.mypetstore.persistence.CategoryMapper">
     <select id="getCategory" parameterType="String" resultType="Category">
-    SELECT
-        CATID AS categoryId,
-        NAME,
-        DESCN AS description
-    FROM CATEGORY
-    WHERE CATID = #{categoryId}
+    select
+        catid as categoryid,
+        name,
+        descn as description
+    from category
+    where catid = #{categoryId}
     </select>
 </mapper>

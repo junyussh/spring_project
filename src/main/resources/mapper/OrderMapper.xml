@@ -4,45 +4,45 @@
 
 <mapper namespace="org.csu.mypetstore.persistence.OrderMapper">
     <select id="getOrderListByUsername" parameterType="String" resultType="Order">
-    SELECT
-        BILLADDR1 AS billAddress1,
-        BILLADDR2 AS billAddress2,
-        BILLCITY,
-        BILLCOUNTRY,
-        BILLSTATE,
-        BILLTOFIRSTNAME,
-        BILLTOLASTNAME,
-        BILLZIP,
-        SHIPADDR1 AS shipAddress1,
-        SHIPADDR2 AS shipAddress2,
-        SHIPCITY,
-        SHIPCOUNTRY,
-        SHIPSTATE,
-        SHIPTOFIRSTNAME,
-        SHIPTOLASTNAME,
-        SHIPZIP,
-        CARDTYPE,
-        COURIER,
-        CREDITCARD,
-        EXPRDATE AS expiryDate,
-        LOCALE,
-        ORDERDATE,
-        ORDERS.ORDERID,
-        TOTALPRICE,
-        USERID AS username,
-        STATUS
-    FROM ORDERS, ORDERSTATUS
-    WHERE ORDERS.USERID = #{value}
-        AND ORDERS.ORDERID = ORDERSTATUS.ORDERID
-        ORDER BY ORDERDATE
+    select
+        billaddr1 as billaddress1,
+        billaddr2 as billaddress2,
+        billcity,
+        billcountry,
+        billstate,
+        billtofirstname,
+        billtolastname,
+        billzip,
+        shipaddr1 as shipAddress1,
+        shipaddr2 as shipAddress2,
+        shipcity,
+        shipcountry,
+        shipstate,
+        shiptofirstname,
+        shiptolastname,
+        shipzip,
+        cardtype,
+        courier,
+        creditcard,
+        exprdate as expiryDate,
+        locale,
+        orderdate,
+        orders.orderid,
+        totalprice,
+        userid as username,
+        status
+    from orders, orderstatus
+    where orders.userid = #{value}
+        and orders.orderid = orderstatus.orderid
+        order by orderdate
     </select>
 
     <select id="insertOrder" parameterType="Order">
-    INSERT INTO ORDERS (ORDERID, USERID, ORDERDATE, SHIPADDR1, SHIPADDR2, SHIPCITY, SHIPSTATE,
-        SHIPZIP, SHIPCOUNTRY, BILLADDR1, BILLADDR2, BILLCITY, BILLSTATE, BILLZIP, BILLCOUNTRY,
-        COURIER, TOTALPRICE, BILLTOFIRSTNAME, BILLTOLASTNAME, SHIPTOFIRSTNAME, SHIPTOLASTNAME,
-        CREDITCARD, EXPRDATE, CARDTYPE, LOCALE)
-    VALUES(#{orderId}, #{username}, #{orderDate}, #{shipAddress1}, #{shipAddress2,jdbcType=VARCHAR}, #{shipCity},
+    insert into orders (orderid, userid, orderdate, shipaddr1, shipaddr2, shipcity, shipstate,
+        shipzip, shipcountry, billaddr1, billaddr2, billcity, billstate, billzip, billcountry,
+        courier, totalprice, billtofirstname, billtolastname, shiptofirstname, shiptolastname,
+        creditcard, exprdate, cardtype, locale)
+    values(#{orderId}, #{username}, #{orderDate}, #{shipAddress1}, #{shipAddress2,jdbcType=VARCHAR}, #{shipCity},
         #{shipState}, #{shipZip}, #{shipCountry}, #{billAddress1}, #{billAddress2,jdbcType=VARCHAR}, #{billCity},
         #{billState}, #{billZip}, #{billCountry}, #{courier}, #{totalPrice}, #{billToFirstName}, #{billToLastName},
         #{shipToFirstName}, #{shipToLastName}, #{creditCard}, #{expiryDate}, #{cardType}, #{locale})
@@ -50,39 +50,39 @@
 
     <select id="getOrder" parameterType="int" resultType="Order">
     select
-        BILLADDR1 AS billAddress1,
-        BILLADDR2 AS billAddress2,
-        BILLCITY,
-        BILLCOUNTRY,
-        BILLSTATE,
-        BILLTOFIRSTNAME,
-        BILLTOLASTNAME,
-        BILLZIP,
-        SHIPADDR1 AS shipAddress1,
-        SHIPADDR2 AS shipAddress2,
-        SHIPCITY,
-        SHIPCOUNTRY,
-        SHIPSTATE,
-        SHIPTOFIRSTNAME,
-        SHIPTOLASTNAME,
-        SHIPZIP,
-        CARDTYPE,
-        COURIER,
-        CREDITCARD,
-        EXPRDATE AS expiryDate,
-        LOCALE,
-        ORDERDATE,
-        ORDERS.ORDERID,
-        TOTALPRICE,
-        USERID AS username,
-        STATUS
-    FROM ORDERS, ORDERSTATUS
-    WHERE ORDERS.ORDERID = #{value}
-        AND ORDERS.ORDERID = ORDERSTATUS.ORDERID
+        billaddr1 as billAddress1,
+        billaddr2 as billAddress2,
+        billcity,
+        billcountry,
+        billstate,
+        billtofirstname,
+        billtolastname,
+        billzip,
+        shipaddr1 as shipAddress1,
+        shipaddr2 as shipAddress2,
+        shipcity,
+        shipcountry,
+        shipstate,
+        shiptofirstname,
+        shiptolastname,
+        shipzip,
+        cardtype,
+        courier,
+        creditcard,
+        exprdate as expiryDate,
+        locale,
+        orderdate,
+        orders.orderid,
+        totalprice,
+        userid as username,
+        status
+    from orders, orderstatus
+    where orders.orderid = #{value}
+        and orders.orderid = orderstatus.orderid
     </select>
 
     <select id="insertOrderStatus" parameterType="Order">
-        INSERT INTO ORDERSTATUS (ORDERID, LINENUM, TIMESTAMP, STATUS)
-    VALUES (#{orderId,jdbcType=NUMERIC}, #{orderId,jdbcType=NUMERIC}, #{orderDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR})
+        insert into orderstatus (orderid, linenum, timestamp, status)
+    values (#{orderId,jdbcType=NUMERIC}, #{orderId,jdbcType=NUMERIC}, #{orderDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR})
     </select>
 </mapper>

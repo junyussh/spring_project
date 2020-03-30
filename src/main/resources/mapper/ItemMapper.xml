@@ -4,58 +4,58 @@
 
 <mapper namespace="org.csu.mypetstore.persistence.ItemMapper">
     <select id="getItemListByProduct" parameterType="String" resultType="Item">
-    SELECT
-        I.ITEMID,
-        LISTPRICE,
-        UNITCOST,
-        SUPPLIER AS supplierId,
-        I.PRODUCTID AS "product.productId",
-        NAME AS "product.name",
-        DESCN AS "product.description",
-        CATEGORY AS "product.categoryId",
-        STATUS,
-        ATTR1 AS attribute1,
-        ATTR2 AS attribute2,
-        ATTR3 AS attribute3,
-        ATTR4 AS attribute4,
-        ATTR5 AS attribute5
-    FROM ITEM I, PRODUCT P
-    WHERE P.PRODUCTID = I.PRODUCTID
-        AND I.PRODUCTID = #{value}
+    select
+        i.itemid,
+        listprice,
+        unitcost,
+        supplier as supplierId,
+        i.productid as "product.productId",
+        name as "product.name",
+        descn as "product.description",
+        category as "product.categoryId",
+        status,
+        attr1 as attribute1,
+        attr2 as attribute2,
+        attr3 as attribute3,
+        attr4 as attribute4,
+        attr5 as attribute5
+    from item i, product p
+    where p.productid = i.productid
+        and i.productid = #{value}
     </select>
 
     <select id="getItem" parameterType="String" resultType="Item">
     select
-        I.ITEMID,
-        LISTPRICE,
-        UNITCOST,
-        SUPPLIER AS supplierId,
-        I.PRODUCTID AS "product.productId",
-        NAME AS "product.name",
-        DESCN AS "product.description",
-        CATEGORY AS "product.categoryId",
-        STATUS,
-        ATTR1 AS attribute1,
-        ATTR2 AS attribute2,
-        ATTR3 AS attribute3,
-        ATTR4 AS attribute4,
-        ATTR5 AS attribute5,
-        QTY AS quantity
-    from ITEM I, INVENTORY V, PRODUCT P
-    where P.PRODUCTID = I.PRODUCTID
-        and I.ITEMID = V.ITEMID
-        and I.ITEMID = #{value}
+        i.itemid,
+        listprice,
+        unitcost,
+        supplier as supplierId,
+        i.productid as "product.productId",
+        name as "product.name",
+        descn as "product.description",
+        category as "product.categoryId",
+        status,
+        attr1 as attribute1,
+        attr2 as attribute2,
+        attr3 as attribute3,
+        attr4 as attribute4,
+        attr5 as attribute5,
+        qty as quantity
+    from item i, inventory v, product p
+    where p.productid = i.productid
+        and i.itemid = v.itemid
+        and i.itemid = #{value}
     </select>
 
     <select id="getInventoryQuantity" parameterType="String" resultType="int">
-    SELECT QTY AS value
-        FROM INVENTORY
-    WHERE ITEMID = #{itemId}
+    select qty as value
+        from inventory
+    where itemid = #{itemId}
     </select>
 
     <select id="updateInventoryQuantity" parameterType="map">
-    UPDATE INVENTORY SET
-      QTY = QTY - #{increment}
-    WHERE ITEMID = #{itemId}
+    update inventory set
+      qty = qty - #{increment}
+    where itemid = #{itemId}
     </select>
 </mapper>

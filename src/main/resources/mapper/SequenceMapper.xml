@@ -4,14 +4,14 @@
 
 <mapper namespace="org.csu.mypetstore.persistence.SequenceMapper">
     <select id="getSequence" parameterType="Sequence" resultType="Sequence">
-    SELECT name, nextid
-    FROM SEQUENCE
-    WHERE NAME = #{name}
+    select name, nextid as nextId
+    from sequence
+    where name = #{name}
     </select>
 
     <select id="updateSequence" parameterType="Sequence">
-    UPDATE SEQUENCE
-    SET NEXTID = #{nextId}
-    WHERE NAME = #{name}
+    update sequence
+    set nextid = #{nextId}
+    where name = #{name}
     </select>
 </mapper>
