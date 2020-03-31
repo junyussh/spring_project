@@ -128,13 +128,13 @@
                             <th>Total Cost</th>
                         </tr>
 
-<!--                        <tr th:each="LineItem:${order.getLineItems()}">-->
-<!--                            <td><a th:href="@{/catalog/item(productId=${LineItem.getItem().getProduct().getProductId()},itemId=${LineItem.getItem().getItemId()})}" th:text="${LineItem.getItem().getItemId()}">EST-4</a></td>-->
-<!--                            <td th:text="${LineItem.getItem().getAttribute1()}+' '+${LineItem.getItem().getProduct().getName()}">Spotted Koi</td>-->
-<!--                            <td th:text="${LineItem.getQuantity()}">1</td>-->
-<!--                            <td th:text="'$'+${LineItem.getItem().getListPrice()}">18.50</td>-->
-<!--                            <td th:text="'$'+${LineItem.getTotal()}"></td>-->
-<!--                        </tr>-->
+                        <tr th:each="LineItem:${order.getLineItems()}">
+                            <td><a th:href="@{/catalog/item(productId=${LineItem.getItem().getProduct().getProductId()},itemId=${LineItem.getItem().getItemId()})}" th:text="${LineItem.getItem().getItemId()}">EST-4</a></td>
+                            <td th:text="${LineItem.getItem().getAttribute1()}+' '+${LineItem.getItem().getProduct().getName()}">Spotted Koi</td>
+                            <td th:text="${LineItem.getQuantity()}">1</td>
+                            <td th:text="'$'+${LineItem.getItem().getListPrice()}">18.50</td>
+                            <td th:text="'$'+${LineItem.getTotal()}"></td>
+                        </tr>
 
                         <tr>
                             <th colspan="5" th:text="'$'+${order.totalPrice}">Total: $18.50</th>

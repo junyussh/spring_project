@@ -64,6 +64,15 @@ public class OrderService {
         order.setOrderId(getNextId("ordernum"));
 
         // TODO 更改库存数量
+        for (int i = 0; i < order.getLineItems().size(); i++) {
+            LineItem lineItem = (LineItem) order.getLineItems().get(i);
+            String itemId = lineItem.getItemId();
+            Integer increment = new Integer(lineItem.getQuantity());
+            Map<String, Object> param = new HashMap<String, Object>(2);
+            param.put("itemId", itemId);
+            param.put("increment", increment);
+            itemMapper.updateInventoryQuantity(param);
+        }
 
         // 更改order中添加上去的和lineitem中添加上去的
 
@@ -90,7 +99,6 @@ public class OrderService {
         Order order = orderMapper.getOrder(orderId);
         order.setLineItems(lineItemMapper.getLineItemsByOrderId(orderId));
 
-        // TODO 考虑有限库存的话=>刷新库存量
 
         return order;
     }

@@ -136,12 +136,13 @@ public class OrderController {
 
         // TODO 在最后呈现页面的时候渲染列表时输出getItem就是空[对象为null]
 
-//        System.out.println("check the order 's lineitemlist = "+order.getLineItems().size()+"~~~~~~~~~~");
-//        for (LineItem lineItem : order.getLineItems()){
-//            System.out.println(lineItem.getItem());  //输出为null
-//            System.out.println(lineItem.getItem().getProduct());
-//            System.out.println(lineItem.getItem().getProduct().getProductId());
-//        }
+        System.out.println("check the order 's lineitemlist = "+order.getLineItems().size()+"～～～～～～～～～～～~~~~~~~~~~");
+        for (LineItem lineItem : order.getLineItems()){
+            System.out.println(lineItem.getItem());  //输出为null
+            System.out.println(lineItem.getItem().getProduct());
+            System.out.println(lineItem.getItem().getProduct().getProductId());
+        }
+
         model.addAttribute("order",order);
         return "order/viewOrder";
     }

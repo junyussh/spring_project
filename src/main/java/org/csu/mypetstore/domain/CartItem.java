@@ -32,6 +32,14 @@ public class CartItem {
         this.quantity = quantity;
     }
 
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
     /**
      * 更改CartItem的个数要调用底层的函数，随后计算总价值。
      */
