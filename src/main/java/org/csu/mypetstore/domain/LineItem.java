@@ -44,6 +44,15 @@ public class LineItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+        calculateTotal();
+    }
+
+    private void calculateTotal() {
+        if (item != null && item.getListPrice() != null) {
+            total = item.getListPrice().multiply(new BigDecimal(quantity));
+        } else {
+            total = null;
+        }
     }
 
     public String getItemId() {
@@ -68,6 +77,7 @@ public class LineItem {
 
     public void setItem(Item item) {
         this.item = item;
+        calculateTotal();
     }
 
     public BigDecimal getTotal() {
@@ -77,4 +87,7 @@ public class LineItem {
     public void setTotal(BigDecimal total) {
         this.total = total;
     }
+
+
+
 }

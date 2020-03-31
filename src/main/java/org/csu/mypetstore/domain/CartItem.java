@@ -22,6 +22,7 @@ public class CartItem {
 
     public void setItem(Item item) {
         this.item = item;
+        calculateTotal();
     }
 
     public int getQuantity() {
@@ -30,6 +31,7 @@ public class CartItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+        calculateTotal();
     }
 
     public BigDecimal getTotal() {

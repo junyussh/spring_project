@@ -79,7 +79,11 @@ public class OrderService {
         System.out.println(order.getBillAddress1());
         orderMapper.insertOrder(order);
         orderMapper.insertOrderStatus(order);
+        System.out.println("================     check all the item ");
         for (int i = 0; i < order.getLineItems().size(); i++) {
+            System.out.println(order.getLineItems().get(i));   // 在利用lineitem更改数据库的时候还不是null
+            System.out.println(order.getLineItems().get(i).getItem()+" "+order.getLineItems().get(i).getItem().getProduct());
+            System.out.println("****************");
             LineItem lineItem = (LineItem) order.getLineItems().get(i);
             lineItem.setOrderId(order.getOrderId());
             lineItemMapper.insertLineItem(lineItem);
@@ -98,7 +102,15 @@ public class OrderService {
 
         Order order = orderMapper.getOrder(orderId);
         order.setLineItems(lineItemMapper.getLineItemsByOrderId(orderId));
+//        System.out.println("before lineitem mapper the data is "+order.getLineItems().get(0).getItem().getProduct()+" "+order.getLineItems().get(0).getItem());
 
+        for (int i = 0; i < order.getLineItems().size(); i++) {
+            LineItem lineItem = (LineItem) order.getLineItems().get(i);
+            Item item = itemMapper.getItem(lineItem.getItemId());
+            item.setQuantity(itemMapper.getInventoryQuantity(lineItem.getItemId()));
+            lineItem.setItem(item);
+        }
+        System.out.println("after lineitem mapper the data is "+order.getLineItems().get(0).getItem().getProduct()+" "+order.getLineItems().get(0).getItem());
 
         return order;
     }

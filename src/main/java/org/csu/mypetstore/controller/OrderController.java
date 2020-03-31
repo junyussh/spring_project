@@ -80,17 +80,28 @@ public class OrderController {
         System.out.println("printf the data from front"+billAddress1);
         String shippingAddress = request.getParameter("shippingAddressRequired");
 
-        Order order = new Order();
+//        Order order = new Order();
+//
+//        List<LineItem>lineItems=new ArrayList<>();
+//        order.setLineItems(lineItems);
+//
+//        int orderNumber = orderService.getNextId("ordernum");
+//        order.setOrderId(orderNumber);
+//
+//        HttpSession httpSession = request.getSession();
+//        Account account = (Account) httpSession.getAttribute("account");
+//        Cart cart = (Cart) httpSession.getAttribute("cart");
+//        order.setAccountAndCart(account,cart);
 
+        Order order=new Order();
         List<LineItem>lineItems=new ArrayList<>();
+
+        HttpSession httpSession=request.getSession();
+        Account account=(Account)httpSession.getAttribute("account");
+        Cart cart=(Cart)httpSession.getAttribute("cart");
+        int ordernum=orderService.getNextId("ordernum");
         order.setLineItems(lineItems);
-
-        int orderNumber = orderService.getNextId("ordernum");
-        order.setOrderId(orderNumber);
-
-        HttpSession httpSession = request.getSession();
-        Account account = (Account) httpSession.getAttribute("account");
-        Cart cart = (Cart) httpSession.getAttribute("cart");
+        order.setOrderId(ordernum);
         order.setAccountAndCart(account,cart);
 
         order.setCardType(cardType);
@@ -108,6 +119,7 @@ public class OrderController {
 
 
         if(shippingAddress==null){
+//            System.out.println("@@@@@@@@@@@@@   "+order.getLineItems().get(0).getItem().getProduct());
             orderService.insertOrder(order);
             // TODO 跳转到最后的confirm界面有问题
             return "order/confirmCheckOutForm";
@@ -134,13 +146,17 @@ public class OrderController {
 
         Order order = orderService.getOrder(orderId);
 
+
+
         // TODO 在最后呈现页面的时候渲染列表时输出getItem就是空[对象为null]
 
         System.out.println("check the order 's lineitemlist = "+order.getLineItems().size()+"～～～～～～～～～～～~~~~~~~~~~");
         for (LineItem lineItem : order.getLineItems()){
+            System.out.println(lineItem);
             System.out.println(lineItem.getItem());  //输出为null
-            System.out.println(lineItem.getItem().getProduct());
-            System.out.println(lineItem.getItem().getProduct().getProductId());
+            System.out.println("^^^^^^^");
+//            System.out.println(lineItem.getItem().getProduct());
+//            System.out.println(lineItem.getItem().getProduct().getProductId());
         }
 
         model.addAttribute("order",order);
