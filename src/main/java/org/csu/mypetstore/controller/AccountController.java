@@ -80,6 +80,17 @@ public class AccountController {
      */
     @GetMapping("/register")
     public String register(Model model) {
+        List<String> languageList = new ArrayList<String>();
+        languageList.add("English");
+        languageList.add("Chinese");
+        List<String> categoryList = new ArrayList<String>();
+        categoryList.add("FISH");
+        categoryList.add("DOGS");
+        categoryList.add("CATS");
+        categoryList.add("BIRDS");
+        categoryList.add("REPTILES");
+        model.addAttribute("languageList",languageList);
+        model.addAttribute("categoryList", categoryList);
         return "account/register";
     }
 
@@ -100,6 +111,7 @@ public class AccountController {
         account.setBannerOption(true);
         account.setListOption(true);
         account.setFavouriteCategoryId("DOGS");
+//        System.out.println("check account info "+ account.getUsername()+" "+account.getPassword()+" "+account.getAddress1()+" "+account.getAddress2()+" "+account.getCity()+" "+account.getFirstName());
         accountService.insertAccount(account);
         httpSession.setAttribute("account",account);
         Cart cart = new Cart();
@@ -162,7 +174,7 @@ public class AccountController {
     public String view_info(Model model){
         List<String> languageList = new ArrayList<String>();
         languageList.add("English");
-        languageList.add("Japanes");
+        languageList.add("Chinese");
         List<String> categoryList = new ArrayList<String>();
         categoryList.add("FISH");
         categoryList.add("DOGS");
