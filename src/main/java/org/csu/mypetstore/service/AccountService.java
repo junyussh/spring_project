@@ -1,5 +1,6 @@
 package org.csu.mypetstore.service;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.csu.mypetstore.domain.Account;
 import org.csu.mypetstore.persistence.AccountMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,11 @@ public class AccountService {
      * @return
      */
     public Account getAccount(String username,String password){
+        String hashPassword = new SimpleHash("SHA-256", password, username+"reg", 1024).toString();
         Account account = new Account();
         account.setUsername(username);
-        account.setPassword(password);
+        account.setPassword(hashPassword);
+//        System.out.println("hashPassword is " + hashPassword);
         return accountMapper.getAccountByUsernameAndPassword(account);
     }
 
@@ -41,6 +44,10 @@ public class AccountService {
      */
     @Transactional
     public void insertAccount(Account account){
+        String password = account.getPassword();
+        String username = account.getUsername();
+        String hashPassword = new SimpleHash("SHA-256", password, username+"reg", 1024).toString();
+        account.setPassword(hashPassword);
         accountMapper.insertAccount(account);
         accountMapper.insertProfile(account);
         accountMapper.insertSignon(account);
