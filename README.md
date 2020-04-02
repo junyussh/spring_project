@@ -29,9 +29,9 @@
  * 完成订单之后，显示刚才完成订单的界面无法获取lineitem的item属性。--已解决
 
  * 更改商品有限数量模块。--已解决
- 
+
  * 新增bug：在没有登陆的情况下提交订单报错。--已解决。
- 
+
  * 商品图片显示bug。--已解决 
 
  * 附加任务
@@ -40,9 +40,26 @@
     * 用户模块和登陆模块添加验证码。
     * 订单模块支付功能，使用支付宝或者微信接口。
 
-   
+ ## 使用到的開源技術
 
+- [Spring Boot](https://spring.io/projects/spring-boot)
+- [Maven](https://maven.apache.org/)
+- [MyBatis 3](https://mybatis.org)
+- [MariaDB](https://mariadb.org/)
 
+## Special Thanks
+
+- [Cloudflare](https://www.cloudflare.com)
+
+![Cloudflare](https://www.cloudflare.com/img/logo-web-badges/cf-logo-on-white-bg.svg)
+
+- [Trello](https://trello.com)
+
+    ![Trello](https://upload.wikimedia.org/wikipedia/en/8/8c/Trello_logo.svg)
+
+- [HackMD](https://hackmd.io/)
+
+    ![HackMD](https://i.loli.net/2020/04/02/7phCqlI31PfKXF5.png)
 
  
 
