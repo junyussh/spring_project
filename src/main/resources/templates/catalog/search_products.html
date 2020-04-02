@@ -22,10 +22,11 @@
             </tr>
 
             <tr th:each="product:${productList}">
-                <td>
-                    <label><img th:src="${product.descriptionImage}"></label>
-                    <label th:text="${product.descriptionText}"></label>
-                </td>
+                <td th:utext="${product.description}"></td>
+<!--                <td>-->
+<!--                    <label><img th:src="${product.descriptionImage}"></label>-->
+<!--                    <label th:text="${product.descriptionText}"></label>-->
+<!--                </td>-->
                 <td>
                     <b>
                         <a th:href="'/catalog/viewProduct?productId='+${product.productId}" >
