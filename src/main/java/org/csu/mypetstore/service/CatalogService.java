@@ -59,4 +59,9 @@ public class CatalogService {
     public boolean isItemInStock(String itemId) {
         return itemMapper.getInventoryQuantity(itemId) > 0;
     }
+
+    /**搜索商品*/
+    public List<Product> searchProductList(String keyword) {
+        return productMapper.searchProductList("%" + keyword.toLowerCase() + "%");
+    }
 }
