@@ -58,11 +58,11 @@
                 console.log(err)
             })
         }
-        let captcha = document.createElement("input");
-        captcha.type = "hidden";
-        captcha.name = "google_recaptcha_token";
-        captcha.value = grecaptcha.getResponse();
-        form.appendChild(captcha);
+        // let captcha = document.createElement("input");
+        // captcha.type = "hidden";
+        // captcha.name = "google_recaptcha_token";
+        // captcha.value = grecaptcha.getResponse();
+        // form.appendChild(captcha);
         form.submit();
         // inputs.forEach(input => {
         //     // console.log(input.name, input.value)

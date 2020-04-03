@@ -4,29 +4,29 @@
 
 <mapper namespace="org.csu.mypetstore.persistence.AccountMapper">
     <select id="getAccountByUsername" parameterType="String" resultType="Account">
-    SELECT
-        SIGNON.USERNAME,
-        ACCOUNT.EMAIL,
-        ACCOUNT.FIRSTNAME,
-        ACCOUNT.LASTNAME,
-        ACCOUNT.STATUS,
-        ACCOUNT.ADDR1 AS address1,
-        ACCOUNT.ADDR2 AS address2,
-        ACCOUNT.CITY,
-        ACCOUNT.STATE,
-        ACCOUNT.ZIP,
-        ACCOUNT.COUNTRY,
-        ACCOUNT.PHONE,
-        PROFILE.LANGPREF AS languagePreference,
-        PROFILE.FAVCATEGORY AS favouriteCategoryId,
-        PROFILE.MYLISTOPT AS listOption,
-        PROFILE.BANNEROPT AS bannerOption,
-        BANNERDATA.BANNERNAME
-    FROM ACCOUNT, PROFILE, SIGNON, BANNERDATA
-    WHERE ACCOUNT.USERID = #{username}
-        AND SIGNON.USERNAME = ACCOUNT.USERID
-        AND PROFILE.USERID = ACCOUNT.USERID
-        AND PROFILE.FAVCATEGORY = BANNERDATA.FAVCATEGORY
+    select
+        signon.username,
+        account.email,
+        account.firstname,
+        account.lastname,
+        account.status,
+        account.addr1 as address1,
+        account.addr2 as address2,
+        account.city,
+        account.state,
+        account.zip,
+        account.country,
+        account.phone,
+        profile.langpref as languagePreference,
+        profile.favcategory as favouriteCategoryId,
+        profile.mylistopt as listOption,
+        profile.banneropt as bannerOption,
+        bannerdata.bannername
+    from account, profile, signon, bannerdata
+    where account.userid = #{username}
+        and signon.username = account.userid
+        and profile.userid = account.userid
+        and profile.favcategory = bannerdata.favcategory
     </select>
 
     <select id="getAccountByUsernameAndPassword" parameterType="Account" resultType="Account">
@@ -57,47 +57,47 @@
     </select>
 
     <select id="insertAccount" parameterType="Account">
-    INSERT INTO ACCOUNT
-        (EMAIL, FIRSTNAME, LASTNAME, STATUS, ADDR1, ADDR2, CITY, STATE, ZIP, COUNTRY, PHONE, USERID)
-    VALUES
+    insert into account
+        (email, firstname, lastname, status, addr1, addr2, city, state, zip, country, phone, userid)
+    values
         (#{email}, #{firstName}, #{lastName}, #{status}, #{address1},  #{address2,jdbcType=VARCHAR}, #{city}, #{state}, #{zip}, #{country}, #{phone}, #{username})
     </select>
 
     <select id="insertProfile" parameterType="Account">
-        INSERT INTO PROFILE (LANGPREF, FAVCATEGORY, USERID)
-        VALUES (#{languagePreference}, #{favouriteCategoryId}, #{username})
+        insert into profile (langpref, favcategory, userid)
+        values (#{languagePreference}, #{favouriteCategoryId}, #{username})
     </select>
 
     <select id="insertSignon" parameterType="Account">
-        INSERT INTO SIGNON (PASSWORD,USERNAME)
-        VALUES (#{password}, #{username})
+        insert into signon (password,username)
+        values (#{password}, #{username})
     </select>
 
     <select id="updateAccount" parameterType="Account">
-    UPDATE ACCOUNT SET
-        EMAIL = #{email},
-        FIRSTNAME = #{firstName},
-        LASTNAME = #{lastName},
-        STATUS = #{status},
-        ADDR1 = #{address1},
-        ADDR2 = #{address2,jdbcType=VARCHAR},
-        CITY = #{city},
-        STATE = #{state},
-        ZIP = #{zip},
-        COUNTRY = #{country},
-        PHONE = #{phone}
-    WHERE USERID = #{username}
+    update account set
+        email = #{email},
+        firstname = #{firstName},
+        lastname = #{lastName},
+        status = #{status},
+        addr1 = #{address1},
+        addr2 = #{address2,jdbcType=VARCHAR},
+        city = #{city},
+        state = #{state},
+        zip = #{zip},
+        country = #{country},
+        phone = #{phone}
+    where userid = #{username}
     </select>
 
     <select id="updateProfile" parameterType="Account">
-    UPDATE PROFILE SET
-        LANGPREF = #{languagePreference},
-        FAVCATEGORY = #{favouriteCategoryId}
-    WHERE USERID = #{username}
+    update profile set
+        langpref = #{languagePreference},
+        favcategory = #{favouriteCategoryId}
+    where userid = #{username}
     </select>
 
     <select id="updateSignon" parameterType="Account">
-        UPDATE SIGNON SET PASSWORD = #{password}
-        WHERE USERNAME = #{username}
+        update signon set password = #{password}
+        where username = #{username}
     </select>
 </mapper>

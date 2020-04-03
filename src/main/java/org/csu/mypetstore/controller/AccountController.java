@@ -71,6 +71,8 @@ public class AccountController {
     public String login_confirm(String username, String password, Model model, HttpSession httpSession) {
         if (username != null && password != null) {
             Account account = accountService.getAccount(username, password);
+            System.out.println("username "+ username);
+            System.out.println(account);
             if (account != null) {
                 httpSession.setAttribute("account", account);
                 httpSession.setAttribute("loginError", null);
