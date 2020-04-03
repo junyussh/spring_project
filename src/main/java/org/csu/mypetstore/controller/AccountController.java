@@ -1,19 +1,26 @@
 package org.csu.mypetstore.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.csu.mypetstore.domain.Account;
 import org.csu.mypetstore.domain.Cart;
 import org.csu.mypetstore.persistence.AccountMapper;
 import org.csu.mypetstore.service.AccountService;
+import org.csu.mypetstore.service.HttpClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/account")
@@ -21,7 +28,8 @@ public class AccountController {
 
     @Autowired
     private AccountService accountService;
-
+    @Autowired
+    private HttpClientService httpClientService;
 
     /**
      * 登陆：跳转到登陆界面
@@ -41,6 +49,24 @@ public class AccountController {
      * @param model
      * @return
      */
+    @PostMapping("/captcha")
+    @ResponseBody
+    public String verifyCaptcha(@RequestBody Map<String,String> captcha) throws JsonProcessingException {
+        Map<String, String> data = new HashMap<>();
+        String url = "https://www.google.com/recaptcha/api/siteverify";
+        data.put("secret", "6LezCeYUAAAAAL7MJ1eoa-7r95JAE3hGRtu2pJG7");
+        data.put("response", captcha.get("google_recaptcha_token"));
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        String json = objectMapper.writeValueAsString(data);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+//        HttpEntity<Map<String, String>> entity = new HttpEntity<>(data, headers);
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("secret", "6LezCeYUAAAAAL7MJ1eoa-7r95JAE3hGRtu2pJG7")
+                .queryParam("response", captcha.get("google_recaptcha_token"));
+//        HttpEntity<?> entity = new HttpEntity<>(headers);
+        return httpClientService.get(builder.toUriString());
+    }
     @PostMapping("/login_confirm")
     public String login_confirm(String username, String password, Model model, HttpSession httpSession) {
         if (username != null && password != null) {

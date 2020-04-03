@@ -46,6 +46,7 @@
 - [Maven](https://maven.apache.org/)
 - [MyBatis 3](https://mybatis.org)
 - [MariaDB](https://mariadb.org/)
+- [jackson](https://github.com/FasterXML/jackson)
 
 ## Special Thanks
 
