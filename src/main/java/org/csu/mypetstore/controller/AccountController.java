@@ -79,14 +79,14 @@ public class AccountController {
                 httpSession.setAttribute("username",username);
                 Cart cart = new Cart();
                 httpSession.setAttribute("cart", cart);
-                return "/catalog/main";
+                return "catalog/main";
             } else {
                 httpSession.setAttribute("loginError", 1);
                 httpSession.setAttribute("account", null);
-                return "/account/login";
+                return "account/login";
             }
         }
-        return "/catalog/main";
+        return "catalog/main";
     }
 
     /**

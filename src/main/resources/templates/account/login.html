@@ -7,7 +7,7 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
-<div th:replace="/common/top"/>
+<div th:replace="common/top"/>
 
 <div id="Content">
 
@@ -28,7 +28,7 @@
     </div>
 </div>
 
-<div th:replace="/common/bottom"/>
+<div th:replace="common/bottom"/>
 <script>
     let form = document.querySelector("#Catalog>form");
     form.addEventListener("submit", e => {

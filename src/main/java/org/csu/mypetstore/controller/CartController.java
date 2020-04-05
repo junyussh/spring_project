@@ -48,7 +48,7 @@ public class CartController {
             cart.addItem(item, isInStock);
         }
         httpSession.setAttribute("cart",cart);
-        return "/catalog/cart";
+        return "catalog/cart";
     }
 
     /**
@@ -63,7 +63,7 @@ public class CartController {
             cart = new Cart();
             httpSession.setAttribute("cart",cart);
         }
-        return "/catalog/cart";
+        return "catalog/cart";
     }
 
     /**
@@ -77,7 +77,7 @@ public class CartController {
         Cart cart = (Cart)httpSession.getAttribute("cart");
         cart.removeItemById(cartItemId);
         httpSession.setAttribute("cart",cart);
-        return "/catalog/cart";
+        return "catalog/cart";
     }
 
     /**
@@ -90,7 +90,7 @@ public class CartController {
         Cart cart = (Cart)httpSession.getAttribute("cart");
         cart.getCartItemList().clear();
         httpSession.setAttribute("cart",cart);
-        return "/catalog/cart";
+        return "catalog/cart";
     }
 
     /**
