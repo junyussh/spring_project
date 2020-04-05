@@ -30,7 +30,7 @@ jobs:
           HOST: ${{ secrets.HOST }}
           USERNAME: ${{ secrets.USERNAME }}
           PORT: ${{ secrets.PORT }}
-          KEY: ${{ secrets.KEY }}
+          password: ${{ secrets.PASSWORD }}
         with:
           source: "target/mypetstore-0.0.1-SNAPSHOT.jar"
           target: "/root/aczy156"
