@@ -1,24 +1,38 @@
 package org.csu.mypetstore.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(description = "User's information")
 public class Account {
+    private Integer id;
+    @ApiModelProperty(value = "Username",required = true)
     private String username;
+    @ApiModelProperty(value = "Password",required = true)
     private String password;
+    @ApiModelProperty(value = "Email",required = true)
     private String email;
+    @ApiModelProperty(value = "First Name",required = true)
     private String firstName;
+    @ApiModelProperty(value = "Last Name",required = true)
     private String lastName;
-    private String status;
+    private boolean status;
+    @ApiModelProperty(value = "Address1",required = true)
     private String address1;
+    @ApiModelProperty(value = "Address2",required = true)
     private String address2;
+    @ApiModelProperty(value = "City",required = true)
     private String city;
+    @ApiModelProperty(value = "State",required = true)
     private String state;
+    @ApiModelProperty(value = "Zipcode",required = true)
     private String zip;
+    @ApiModelProperty(value = "Country",required = true)
     private String country;
+    @ApiModelProperty(value = "Phone number",required = true)
     private String phone;
-    private String favouriteCategoryId;
-    private String languagePreference;
-    private boolean listOption;
-    private boolean bannerOption;
-    private String bannerName;
 
     public String getUsername() {
         return username;
@@ -60,11 +74,13 @@ public class Account {
         this.lastName = lastName;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    // @JsonProperty means not to serialize this field
+    @JsonProperty
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
@@ -124,44 +140,12 @@ public class Account {
         this.phone = phone;
     }
 
-    public String getFavouriteCategoryId() {
-        return favouriteCategoryId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setFavouriteCategoryId(String favouriteCategoryId) {
-        this.favouriteCategoryId = favouriteCategoryId;
+    @JsonProperty
+    public void setId(Integer id) {
+        this.id = id;
     }
-
-    public String getLanguagePreference() {
-        return languagePreference;
-    }
-
-    public void setLanguagePreference(String languagePreference) {
-        this.languagePreference = languagePreference;
-    }
-
-    public boolean isListOption() {
-        return listOption;
-    }
-
-    public void setListOption(boolean listOption) {
-        this.listOption = listOption;
-    }
-
-    public boolean isBannerOption() {
-        return bannerOption;
-    }
-
-    public void setBannerOption(boolean bannerOption) {
-        this.bannerOption = bannerOption;
-    }
-
-    public String getBannerName() {
-        return bannerName;
-    }
-
-    public void setBannerName(String bannerName) {
-        this.bannerName = bannerName;
-    }
-
 }

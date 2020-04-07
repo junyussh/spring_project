@@ -2,6 +2,7 @@ package org.csu.mypetstore.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.annotations.*;
 import org.csu.mypetstore.domain.Account;
 import org.csu.mypetstore.domain.Cart;
 import org.csu.mypetstore.persistence.AccountMapper;
@@ -10,6 +11,7 @@ import org.csu.mypetstore.service.HttpClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/account")
+@RequestMapping("/user")
 public class AccountController {
 
     @Autowired
@@ -41,14 +43,7 @@ public class AccountController {
         return "account/login";
     }
 
-    /**
-     * 登陆验证：
-     * 注意点：在验证成功之后要把购物车一块传进去
-     * @param username
-     * @param password
-     * @param model
-     * @return
-     */
+
     @PostMapping("/captcha")
     @ResponseBody
     public String verifyCaptcha(@RequestBody Map<String,String> captcha) throws JsonProcessingException {
@@ -67,6 +62,60 @@ public class AccountController {
 //        HttpEntity<?> entity = new HttpEntity<>(headers);
         return httpClientService.get(builder.toUriString());
     }
+
+    /**
+     * Query user by id
+     * @param id
+     * @return
+     */
+    @ApiResponses(value = {@ApiResponse(code=200,message = "Query Success")})
+    @ApiOperation("Query")
+    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public String getUser(@PathVariable("id") String id) {
+        return id;
+//        return accountService.getAccountByID(id);
+    }
+
+    /**
+     * Register Interface
+     * @ResponseStatus to set response's http status code
+     * @ApiImplicitParams is fields' annotation for Swagger
+     * @param account
+     * @return
+     */
+    @ApiResponses(value = {@ApiResponse(code = 201 ,message = "User created")})
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Register", response = Account.class)
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "username", value = "User's unique username", required = true, dataType = "string", paramType = "form"),
+//            @ApiImplicitParam(name = "password", value = "User's password", required = true, dataType = "string", paramType = "form"),
+//            @ApiImplicitParam(name = "email", value = "User's email", required = true, dataType = "string", paramType = "form"),
+//            @ApiImplicitParam(name = "firstName", value = "User's first name", required = true, dataType = "string", paramType = "form"),
+//            @ApiImplicitParam(name = "lastName", value = "User's last name", required = true, dataType = "string", paramType = "form"),
+//            @ApiImplicitParam(name = "address1", value = "Address1", required = true, dataType = "string", paramType = "form"),
+//            @ApiImplicitParam(name = "address2", value = "Address2", required = true, dataType = "string", paramType = "form"),
+//            @ApiImplicitParam(name = "city", value = "User's city", required = true, dataType = "string", paramType = "form"),
+//            @ApiImplicitParam(name = "state", value = "User's state", required = true, dataType = "string", paramType = "form"),
+//            @ApiImplicitParam(name = "zip", value = "Zipcode", required = true, dataType = "string", paramType = "form"),
+//            @ApiImplicitParam(name = "country", value = "Country user located", required = true, dataType = "string", paramType = "form"),
+//            @ApiImplicitParam(name = "phone", value = "User's phone number", required = true, dataType = "string", paramType = "form"),
+//    })
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @ResponseBody
+    public Account addUser(@RequestBody Account account)
+    {
+        account.setStatus(false);
+        return accountService.insertAccount(account);
+    }
+    /**
+     * 登陆验证：
+     * 注意点：在验证成功之后要把购物车一块传进去
+     * @param username
+     * @param password
+     * @param model
+     * @return
+     */
     @PostMapping("/login_confirm")
     public String login_confirm(String username, String password, Model model, HttpSession httpSession) {
         if (username != null && password != null) {
@@ -123,31 +172,6 @@ public class AccountController {
     }
 
     /**
-     * 注册完成:注册界面->跳转到主界面界面
-     * 注意注册注册完成之后要把account和cart都放在session中，注册之后就不再去登陆，默认已经登陆了。
-     * @param account
-     * @param httpSession
-     * @return
-     */
-    @PostMapping("/register_confirm")
-    public String register_confirm(Account account, HttpSession httpSession) {
-
-        // TODO 利用username验证是否已经存在
-
-        // TODO 更正新增用户的bug
-
-        account.setBannerOption(true);
-        account.setListOption(true);
-        account.setFavouriteCategoryId("DOGS");
-//        System.out.println("check account info "+ account.getUsername()+" "+account.getPassword()+" "+account.getAddress1()+" "+account.getAddress2()+" "+account.getCity()+" "+account.getFirstName());
-        accountService.insertAccount(account);
-        httpSession.setAttribute("account",account);
-        Cart cart = new Cart();
-        httpSession.setAttribute("cart", cart);
-        return "catalog/main";
-    }
-
-    /**
      * 提交更改信息：提交完成之后界面跳回到主界面
      * TODO：跳转完成还留在当前界面，然后点击之后再跳回
      *
@@ -185,11 +209,7 @@ public class AccountController {
         account.setState(state);
         account.setZip(zip);
         account.setCountry(country);
-        account.setLanguagePreference(languagePreference);
-        account.setFavouriteCategoryId(favouriteCategoryId);
-        account.setBannerOption(true);
-        account.setListOption(true);
-        accountService.update_info(account);
+//        accountService.update_info(account);
         return "catalog/main";
     }
 

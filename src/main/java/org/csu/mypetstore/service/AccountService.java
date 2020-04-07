@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
+import java.util.UUID;
+
 @Service
 public class AccountService {
     /**
@@ -15,6 +18,15 @@ public class AccountService {
 
     @Autowired
     private AccountMapper accountMapper;
+
+    /**
+     * User query by id
+     * @param id
+     * @return
+     */
+    public Account getAccountByID(String id) {
+        return  accountMapper.getAccountByID(id);
+    }
 
     /**
      * 注册验证：给定username查看用户
@@ -43,27 +55,29 @@ public class AccountService {
      * @param account
      */
     @Transactional
-    public void insertAccount(Account account){
+    public Account insertAccount(Account account){
+        // user's uuid
+        String id = String.format("%010d", new BigInteger(UUID.randomUUID().toString().replace("-", ""), 16));
+        Integer _id = Integer.valueOf(id.substring(0, 8));
+        account.setId(_id);
         String password = account.getPassword();
-        String username = account.getUsername();
-        String hashPassword = new SimpleHash("SHA-256", password, username+"reg", 1024).toString();
+        String hashPassword = new SimpleHash("SHA-256", password, id+"reg", 1024).toString();
         account.setPassword(hashPassword);
         accountMapper.insertAccount(account);
-        accountMapper.insertProfile(account);
-        accountMapper.insertSignon(account);
+        return account;
     }
 
     /**
      * 更改信息
      * @param account
      */
-    @Transactional
-    public void update_info(Account account){
-        accountMapper.updateAccount(account);
-        accountMapper.updateProfile(account);
-        if (account.getPassword() != null && account.getPassword().length() > 0) {
-            accountMapper.updateSignon(account);
-        }
-    }
+//    @Transactional
+//    public void update_info(Account account){
+//        accountMapper.updateAccount(account);
+//        accountMapper.updateProfile(account);
+//        if (account.getPassword() != null && account.getPassword().length() > 0) {
+//            accountMapper.updateSignon(account);
+//        }
+//    }
 
 }

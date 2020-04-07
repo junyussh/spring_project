@@ -287,7 +287,7 @@ public class Order {
 
         Iterator<CartItem> i = cart.getAllCartItems();
         while (i.hasNext()) {
-            CartItem cartItem = (CartItem) i.next();
+            CartItem cartItem = i.next();
             addLineItem(cartItem);
         }
     }

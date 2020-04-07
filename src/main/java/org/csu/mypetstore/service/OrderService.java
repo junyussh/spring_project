@@ -65,7 +65,7 @@ public class OrderService {
 
         // TODO 更改库存数量
         for (int i = 0; i < order.getLineItems().size(); i++) {
-            LineItem lineItem = (LineItem) order.getLineItems().get(i);
+            LineItem lineItem = order.getLineItems().get(i);
             String itemId = lineItem.getItemId();
             Integer increment = new Integer(lineItem.getQuantity());
             Map<String, Object> param = new HashMap<String, Object>(2);
@@ -84,7 +84,7 @@ public class OrderService {
             System.out.println(order.getLineItems().get(i));   // 在利用lineitem更改数据库的时候还不是null
             System.out.println(order.getLineItems().get(i).getItem()+" "+order.getLineItems().get(i).getItem().getProduct());
             System.out.println("****************");
-            LineItem lineItem = (LineItem) order.getLineItems().get(i);
+            LineItem lineItem = order.getLineItems().get(i);
             lineItem.setOrderId(order.getOrderId());
             lineItemMapper.insertLineItem(lineItem);
         }
@@ -105,7 +105,7 @@ public class OrderService {
 //        System.out.println("before lineitem mapper the data is "+order.getLineItems().get(0).getItem().getProduct()+" "+order.getLineItems().get(0).getItem());
 
         for (int i = 0; i < order.getLineItems().size(); i++) {
-            LineItem lineItem = (LineItem) order.getLineItems().get(i);
+            LineItem lineItem = order.getLineItems().get(i);
             Item item = itemMapper.getItem(lineItem.getItemId());
             item.setQuantity(itemMapper.getInventoryQuantity(lineItem.getItemId()));
             lineItem.setItem(item);
