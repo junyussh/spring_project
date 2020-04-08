@@ -33,7 +33,7 @@ public class AccountService {
      * @param username
      * @return
      */
-    public Account getAccount(String username){return accountMapper.getAccountByUsername(username);}
+    public Account getAccountByUsername(String username){return accountMapper.getAccountByUsername(username);}
 
     /**
      * 登陆验证：username和password，在数据库中看能否查到
@@ -57,8 +57,12 @@ public class AccountService {
     @Transactional
     public Account insertAccount(Account account){
         // user's uuid
-        String id = String.format("%010d", new BigInteger(UUID.randomUUID().toString().replace("-", ""), 16));
-        Integer _id = Integer.valueOf(id.substring(0, 8));
+        String id;
+        do {
+            id = String.format("%010d", new BigInteger(UUID.randomUUID().toString().replace("-", ""), 16)).substring(0, 8);
+        } while (accountMapper.getAccountByID(id) != null);
+
+        Integer _id = Integer.valueOf(id);
         account.setId(_id);
         String password = account.getPassword();
         String hashPassword = new SimpleHash("SHA-256", password, id+"reg", 1024).toString();

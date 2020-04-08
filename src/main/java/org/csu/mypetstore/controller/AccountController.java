@@ -1,15 +1,16 @@
 package org.csu.mypetstore.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import jdk.nashorn.internal.ir.ObjectNode;
 import org.csu.mypetstore.domain.Account;
 import org.csu.mypetstore.domain.Cart;
-import org.csu.mypetstore.persistence.AccountMapper;
+import org.csu.mypetstore.exception.ApiRequestException;
 import org.csu.mypetstore.service.AccountService;
 import org.csu.mypetstore.service.HttpClientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -70,11 +71,18 @@ public class AccountController {
      */
     @ApiResponses(value = {@ApiResponse(code=200,message = "Query Success")})
     @ApiOperation("Query")
-    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ApiImplicitParams({ @ApiImplicitParam(paramType = "path", dataType = "String", name = "id", value = "User's userid", required = true) })
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET,produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public String getUser(@PathVariable("id") String id) {
-        return id;
-//        return accountService.getAccountByID(id);
+    public Map<String, Object> getUser(@PathVariable("id") String id) {
+        Account account = accountService.getAccountByID(id);
+        if (account == null) {
+            throw new ApiRequestException("User id not found", HttpStatus.NOT_FOUND);
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Object> map = objectMapper.convertValue(account, Map.class);
+        map.remove("password");
+        return map;
     }
 
     /**
@@ -105,7 +113,11 @@ public class AccountController {
     @ResponseBody
     public Account addUser(@RequestBody Account account)
     {
+        if (accountService.getAccountByUsername(account.getUsername()) != null) {
+            throw new ApiRequestException("Username is duplicated", HttpStatus.BAD_REQUEST);
+        }
         account.setStatus(false);
+        System.out.println(account.getPassword());
         return accountService.insertAccount(account);
     }
     /**

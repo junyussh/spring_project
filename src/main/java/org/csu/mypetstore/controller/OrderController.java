@@ -39,7 +39,7 @@ public class OrderController {
     @GetMapping("/viewOrderList")
     public String viewOrderList(String username, Model model, HttpSession httpSession){
         List<Order> orderList = orderService.getOrderListByUsername(username);
-        Account account = accountService.getAccount(username);
+        Account account = accountService.getAccountByUsername(username);
         model.addAttribute("orderList",orderList);
         model.addAttribute("account",account);
         httpSession.setAttribute("username",username);
