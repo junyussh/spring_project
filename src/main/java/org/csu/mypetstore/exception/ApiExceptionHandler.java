@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import io.jsonwebtoken.SignatureException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
@@ -20,5 +21,16 @@ public class ApiExceptionHandler {
         );
         // return response entity
         return new ResponseEntity<>(apiException, e.getStatus());
+    }
+    @ExceptionHandler(value = {SignatureException.class})
+    public ResponseEntity<Object> handleSignatureException(SignatureException e) {
+        // create payload containing exception details
+        ApiException apiException = new ApiException(
+                e.getMessage(),
+                HttpStatus.BAD_REQUEST,
+                ZonedDateTime.now(ZoneId.of("Z"))
+        );
+        // return response entity
+        return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
     }
 }

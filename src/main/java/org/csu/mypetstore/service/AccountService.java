@@ -4,6 +4,7 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.csu.mypetstore.domain.Account;
 import org.csu.mypetstore.persistence.AccountMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,9 @@ public class AccountService {
 
     @Autowired
     private AccountMapper accountMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * User query by id
@@ -65,8 +69,8 @@ public class AccountService {
         Integer _id = Integer.valueOf(id);
         account.setId(_id);
         String password = account.getPassword();
-        String hashPassword = new SimpleHash("SHA-256", password, id+"reg", 1024).toString();
-        account.setPassword(hashPassword);
+//        String hashPassword = new SimpleHash("SHA-256", password, id+"reg", 1024).toString();
+        account.setPassword(passwordEncoder.encode(password));
         accountMapper.insertAccount(account);
         return account;
     }

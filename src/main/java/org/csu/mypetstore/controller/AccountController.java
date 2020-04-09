@@ -1,19 +1,26 @@
 package org.csu.mypetstore.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
-import jdk.nashorn.internal.ir.ObjectNode;
 import org.csu.mypetstore.domain.Account;
 import org.csu.mypetstore.domain.Cart;
 import org.csu.mypetstore.exception.ApiRequestException;
+import org.csu.mypetstore.jwt.AuthenticationRequest;
+import org.csu.mypetstore.jwt.AuthenticationResponse;
+import org.csu.mypetstore.jwt.JwtUtil;
 import org.csu.mypetstore.service.AccountService;
 import org.csu.mypetstore.service.HttpClientService;
+import org.csu.mypetstore.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,15 +40,40 @@ public class AccountController {
     private AccountService accountService;
     @Autowired
     private HttpClientService httpClientService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private JwtUtil jwtTokenUtil;
 
+    @Autowired
+    private MyUserDetailsService userDetailsService;
     /**
-     * 登陆：跳转到登陆界面
+     * Login
      *
      * @return
      */
-    @GetMapping("/login")
-    public String login() {
-        return "account/login";
+    @ApiOperation("Authenticate")
+    @ApiResponses(value = {@ApiResponse(code=200,message = "Login Success"), @ApiResponse(code = 401, message = "Invalid username or password")})
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity<?> authentication(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+        try {
+            System.out.println(authenticationRequest.getUsername());
+            System.out.println(authenticationRequest.getPassword());
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
+            );
+        }
+        catch (BadCredentialsException e) {
+            throw new ApiRequestException("Invalid username or password", HttpStatus.UNAUTHORIZED);
+        }
+
+
+        final UserDetails userDetails = userDetailsService
+                .loadUserByUsername(authenticationRequest.getUsername());
+
+        final String jwt = jwtTokenUtil.generateToken(userDetails);
+
+        return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 
 
@@ -70,7 +102,7 @@ public class AccountController {
      * @return
      */
     @ApiResponses(value = {@ApiResponse(code=200,message = "Query Success")})
-    @ApiOperation("Query")
+    @ApiOperation(value = "Query user info" , authorizations = {@Authorization(value = "Bearer")})
     @ApiImplicitParams({ @ApiImplicitParam(paramType = "path", dataType = "String", name = "id", value = "User's userid", required = true) })
     @RequestMapping(value = "/{id}", method = RequestMethod.GET,produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody

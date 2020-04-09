@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 
 public class ApiRequestException extends RuntimeException {
     private HttpStatus status;
-    private final boolean error = true;
     public ApiRequestException(String message) {
         super(message);
         this.status = HttpStatus.BAD_REQUEST;
